@@ -4,6 +4,8 @@ OrmLiteFields generates the class that holds [OrmLite](http://ormlite.com/)'s Da
 
 ## Installation
 
+[ ![Download](https://api.bintray.com/packages/srym/maven/ormlitefields-processor/images/download.svg) ](https://bintray.com/srym/maven/ormlitefields-processor/_latestVersion)
+
 ```
 annotationProcessor 'us.shiroyama.android:ormlitefields-processor:1.0.0'
 compile 'com.j256.ormlite:ormlite-android:5.0'
