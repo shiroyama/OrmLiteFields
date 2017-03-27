@@ -20,15 +20,28 @@ public class StringUtils {
         int lastUpperCase = 0;
         for (int i = 0; i < from.toCharArray().length; i++) {
             char c = from.charAt(i);
-            if (Character.isUpperCase(c)) {
-                chunks.add(from.substring(lastUpperCase, i).toLowerCase());
-                lastUpperCase = i;
-            }
             if (i == from.toCharArray().length - 1) {
                 chunks.add(from.substring(lastUpperCase).toLowerCase());
+                break;
+            }
+            if (Character.isUpperCase(c)) {
+                boolean hasNext = i + 1 <= from.toCharArray().length;
+                boolean hasBefore = i - 1 >= 0;
+                if (hasNext && hasBefore) {
+                    char nextChar = from.charAt(i + 1);
+                    char beforeChar = from.charAt(i - 1);
+                    if (Character.isUpperCase(beforeChar) && Character.isUpperCase(nextChar)) {
+                        continue;
+                    }
+                }
+                if (lastUpperCase == i) {
+                    continue;
+                }
+                String chunk = from.substring(lastUpperCase, i).toLowerCase();
+                chunks.add(chunk);
+                lastUpperCase = i;
             }
         }
-
         return String.join("_", chunks);
     }
 
@@ -38,11 +51,11 @@ public class StringUtils {
         }
 
         StringBuilder sb = new StringBuilder(from);
-        if (from.charAt(0) == '_') {
+        if (sb.charAt(0) == '_') {
             sb.deleteCharAt(0);
         }
-        if (from.charAt(from.length() - 1) == '_') {
-            sb.deleteCharAt(from.length() - 1);
+        if (sb.charAt(sb.length() - 1) == '_') {
+            sb.deleteCharAt(sb.length() - 1);
         }
         return sb.toString();
     }
